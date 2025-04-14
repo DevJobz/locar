@@ -1747,8 +1747,42 @@ function showLoginError(message) {
     });
 }
 
+// Função para verificar e criar o admin padrão se necessário
+function verificarAdminPadrao() {
+    let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+    // Verifica se já existe um admin
+    const adminExiste = usuarios.some(
+        (u) => u.email.toLowerCase() === 'admin@locar.com'
+    );
+
+    if (!adminExiste) {
+        // Cria o administrador padrão
+        const adminPadrao = {
+            id: 'admin_padrao',
+            tipoUsuario: 'admin',
+            nome: 'Administrador',
+            email: 'admin@locar.com',
+            senha: '123456',
+            status: 'aprovado', // O admin já está aprovado
+            celular: '',
+            cpf: '',
+            cep: '',
+            endereco: '',
+            cnh: '',
+        };
+
+        // Adiciona o admin ao array de usuários
+        usuarios.push(adminPadrao);
+        localStorage.setItem('usuarios', JSON.stringify(usuarios));
+        console.log('Administrador padrão criado com sucesso!');
+    }
+}
+
 // Inicialização: configura o link de cadastro e o submit do login
 document.addEventListener('DOMContentLoaded', () => {
+    // Verifica e cria o admin padrão se necessário
+    verificarAdminPadrao();
     setLanguage(getStoredLanguage());
 
     // Define o idioma armazenado ou padrão
