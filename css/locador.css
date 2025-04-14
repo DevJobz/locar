@@ -1,0 +1,1701 @@
+:root {
+    --primary-color: #2563eb;
+    --primary-dark: #1d4ed8;
+    --accent-color: #38bdf8;
+    --background-dark: #0f172a;
+    --text-light: #e2e8f0;
+    --sidebar-width: 280px;
+    --header-height: 70px;
+    --card-bg: #1e293b;
+    --card-border: #334155;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--background-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        var(--primary-color),
+        var(--accent-color)
+    );
+    opacity: 0.15;
+    z-index: 0;
+}
+
+/* Layout Principal */
+.locador-container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+/* Sidebar */
+.locador-sidebar {
+    width: var(--sidebar-width);
+    background: var(--card-bg);
+    padding: 1.5rem 1rem;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    z-index: 10;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.locador-sidebar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.locador-sidebar-header h2 {
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+    background: linear-gradient(90deg, var(--accent-color), white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.locador-nav {
+    margin-top: 1rem;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-light);
+    text-decoration: none;
+    position: relative; /* Adicionar esta linha */
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: rgba(56, 189, 248, 0.2);
+    color: var(--accent-color);
+}
+
+.nav-item i {
+    margin-right: 0.8rem;
+    font-size: 1.2rem;
+}
+
+.nav-item span {
+    font-size: 0.95rem;
+}
+
+.mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 20;
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0.1;
+}
+
+.mobile-menu-btn:hover {
+    opacity: 1;
+}
+
+/* Conteúdo Principal */
+.locador-main {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    padding: 1.5rem;
+    transition: margin-left 0.3s ease;
+}
+
+.locador-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.locador-header h1 {
+    font-size: 1.8rem;
+    background: linear-gradient(90deg, white, var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Seções */
+.locador-section {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--card-border);
+}
+
+.locador-section h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Listas de Veículos, Solicitações e Feedbacks */
+.veiculos-lista,
+.solicitacoes-list,
+.feedbacks-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.veiculo-card,
+.solicitacao-card,
+.feedback-card {
+    background: rgba(30, 41, 59, 0.7);
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid var(--card-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.veiculo-card:hover,
+.solicitacao-card:hover,
+.feedback-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.card-imagem {
+    text-align: center;
+}
+
+.card-imagem img {
+    width: 100%;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Botões */
+.btn {
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+
+.btn-accent {
+    background: var(--accent-color);
+    color: var(--background-dark);
+}
+
+.btn-accent:hover {
+    background: #7dd3fc;
+    transform: translateY(-2px);
+}
+
+/* Modal de Cadastro de Veículo */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    margin: auto;
+}
+
+.modal-content h2 {
+    margin-bottom: 1.5rem;
+    color: var(--accent-color);
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-light);
+}
+
+.preview-imagem {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--card-border);
+}
+
+/* Visualizador de imagens */
+.visualizador-imagens {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.imagem-full {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
+
+.navegacao-imagens {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.btn-navegacao {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-navegacao:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.btn-fechar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Título da imagem */
+.titulo-imagem {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Chat */
+.modal-chat {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+    max-height: 500px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.chat-header {
+    padding: 10px 15px;
+    background: var(--primary-color);
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid var(--card-border);
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid var(--card-border);
+    border-radius: 5px;
+    margin-right: 5px;
+    background: var(--card-bg);
+    color: var(--text-light);
+}
+
+.btn-enviar {
+    padding: 8px 15px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.message-sent {
+    background: var(--primary-color);
+    color: white;
+    margin-left: auto;
+}
+
+.message-received {
+    background: var(--card-border);
+    margin-right: auto;
+}
+
+.message-time {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    margin-top: 3px;
+}
+
+.btn-fechar {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.btn-chat {
+    background: var(--accent-color);
+    color: var(--background-dark);
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.icon-chat {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%230f172a"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>');
+    background-size: contain;
+}
+
+/* Status da Conta */
+.status-conta {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.status-pendente {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    border: 1px solid #ffc107;
+}
+
+.status-aprovado {
+    display: none;
+}
+
+.status-recusado {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.status-cnh-expired {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.input-invalid {
+    border-color: #dc3545 !important;
+    background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .locador-sidebar {
+        transform: translateX(-100%);
+    }
+    .locador-sidebar.open {
+        transform: translateX(0);
+    }
+    .locador-main {
+        margin-left: 0;
+    }
+    .mobile-menu-btn {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .veiculos-lista,
+    .solicitacoes-list,
+    .feedbacks-list {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-details {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 1rem;
+    }
+
+    .modal-content {
+        padding: 1.5rem 1rem;
+    }
+
+    /* Ajustes para botões */
+    .btn {
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+
+    /* Ajustes para os cards */
+    .veiculo-card,
+    .solicitacao-card,
+    .feedback-card {
+        padding: 1rem;
+    }
+
+    /* Ajustes para os grupos de input */
+    .input-group {
+        margin-bottom: 1.2rem;
+    }
+
+    /* Ajustes para o header */
+    .locador-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* Ajustes para o perfil */
+    .profile-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .profile-picture {
+        margin: 0 auto;
+    }
+
+    /* Ajustes para os checkboxes */
+    .checkbox-group,
+    .radio-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    /* Ajustes para os horários */
+    .horario-item {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    /* Ajustes para os métodos de preço */
+    .pricing-methods-container {
+        grid-template-columns: 1fr;
+    }
+
+    /* Ajustes para o menu mobile */
+    .mobile-menu-btn {
+        opacity: 0.8;
+    }
+
+    .checkbox-group,
+    .radio-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .horario-item {
+        flex-direction: column;
+    }
+
+    .image-upload-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Novos estilos para a aba Meu Perfil */
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent-color);
+    cursor: pointer;
+    transition: transform 0.3s;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.profile-picture:hover {
+    transform: scale(1.05);
+}
+
+.profile-info {
+    flex: 1;
+    position: relative;
+}
+
+.profile-name {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+}
+
+.profile-status {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-active {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+    margin-bottom: 20px;
+}
+
+.status-pending {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.profile-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.detail-card {
+    background: rgba(30, 41, 59, 0.7);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid var(--card-border);
+}
+
+.detail-card h3 {
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 0.5rem;
+}
+
+.detail-card p {
+    margin: 0.5rem 0;
+    color: var(--text-light);
+}
+
+.detail-group {
+    margin-bottom: 1rem;
+}
+
+.detail-group label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.detail-group input,
+.detail-group select {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 6px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-light);
+    font-family: 'Poppins', sans-serif;
+}
+
+.detail-group input:disabled {
+    background: rgba(15, 23, 42, 0.5);
+    color: #94a3b8;
+}
+
+.detail-group input.editing,
+.detail-group select.editing {
+    background: var(--card-bg) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.action-buttons {
+    display: none;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Modal de upload de foto */
+.photo-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-modal-content {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.photo-preview {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 1rem auto;
+    border: 3px solid var(--accent-color);
+    display: none;
+}
+
+.photo-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.input-group input.editing {
+    background-color: #1e293b !important;
+    border-color: #38bdf8 !important;
+}
+
+.input-group input:disabled {
+    background-color: rgba(15, 23, 42, 0.5) !important;
+    color: #94a3b8 !important;
+}
+
+/* Efeito shake para erros */
+.shake {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-5px);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(5px);
+    }
+}
+
+/* Estilos para o cadastro em etapas */
+.progress-container {
+    width: 100%;
+    background-color: var(--card-border);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: var(--accent-color);
+    border-radius: 8px;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    position: absolute;
+    top: -25px;
+    right: 0;
+    font-size: 0.8rem;
+    color: var(--text-light);
+}
+
+.etapa-cadastro {
+    display: none;
+}
+
+.etapa-cadastro.active-etapa {
+    display: block;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
+
+/* Substitua as classes .checkbox-custom e .radio-custom por: */
+
+.checkbox-option input,
+.radio-option input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.checkbox-option,
+.radio-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    position: relative;
+    padding-left: 28px;
+}
+
+.checkbox-option .checkbox-custom,
+.radio-option .radio-custom {
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--accent-color);
+    background-color: var(--card-bg);
+}
+
+.checkbox-option .checkbox-custom {
+    border-radius: 3px;
+}
+
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.btn-fechar-modal {
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* Adicionar ao CSS */
+.dias-semana-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.radio-option .radio-custom {
+    border-radius: 50%;
+}
+
+.checkbox-option input:checked ~ .checkbox-custom::after,
+.radio-option input:checked ~ .radio-custom::after {
+    content: '';
+    position: absolute;
+    display: block;
+}
+
+.checkbox-option input:checked ~ .checkbox-custom::after {
+    content: '✓';
+    color: var(--accent-color);
+    font-size: 14px;
+    left: 2px;
+    top: -3px;
+}
+
+.radio-option input:checked ~ .radio-custom::after {
+    width: 10px;
+    height: 10px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+}
+
+.checkbox-option:hover input ~ .checkbox-custom,
+.radio-option:hover input ~ .radio-custom {
+    background-color: rgba(56, 189, 248, 0.2);
+}
+
+/* Adicione também estilos para o toggle switch que estava faltando */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    margin-left: 10px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 24px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: '';
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: var(--accent-color);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+}
+
+.horario-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(30, 41, 59, 0.5);
+    border-radius: 6px;
+}
+
+.image-upload-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.image-upload-box {
+    border: 2px dashed var(--card-border);
+    border-radius: 8px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-upload-box:hover {
+    border-color: var(--accent-color);
+}
+
+.image-upload-box i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+}
+
+.image-upload-box span {
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 0 5px;
+}
+
+.image-upload-box img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.time-selection-container {
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.time-period {
+    margin-bottom: 1rem;
+}
+
+.time-period h4 {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--accent-color);
+}
+
+.time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.pricing-methods-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.pricing-method {
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 0.8rem;
+}
+
+.pricing-method label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.price-input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--card-border);
+    background-color: var(--card-bg);
+    color: var(--text-light);
+}
+
+.terms-content {
+    max-height: 60vh;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+    padding-right: 1rem;
+}
+
+.terms-content p {
+    margin-bottom: 1rem;
+}
+
+.terms-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Adicione ao seu CSS */
+.error-message {
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+}
+
+.input-invalid {
+    border-color: #dc3545 !important;
+    background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+.shake {
+    animation: shake 0.5s;
+}
+
+/* Modal de detalhes do veículo */
+.modal-veiculo-detalhes {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: auto;
+}
+
+.modal-veiculo-detalhes .modal-content {
+    background-color: var(--card-bg);
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-veiculo-detalhes .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-veiculo-detalhes .close:hover {
+    color: var(--accent-color);
+}
+
+.detalhes-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.detalhes-coluna {
+    flex: 1;
+    min-width: 250px;
+}
+
+.detalhes-coluna h3 {
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+/* Status */
+.status-ativo {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-pausado {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Botões de ação */
+.botoes-acoes {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+/* Modal de reajuste */
+.modal-reajuste,
+.modal-reajuste-global,
+.modal-disponibilidade,
+.modal-calendario {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: auto;
+}
+
+.modal-reajuste .modal-content,
+.modal-reajuste-global .modal-content,
+.modal-disponibilidade .modal-content,
+.modal-calendario .modal-content {
+    background-color: var(--card-bg);
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Checkbox personalizado */
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 4px;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #2563eb;
+}
+
+.checkmark:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Toggle switch */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: '';
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #28a745;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 24px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Horários disponíveis */
+.horario-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.horario-item select,
+.horario-item input {
+    padding: 6px 10px;
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    background: var(--card-bg);
+    color: var(--text-light);
+}
+
+/* Lista de veículos para reajuste */
+.veiculo-reajuste-item {
+    padding: 8px;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.veiculo-reajuste-item:last-child {
+    border-bottom: none;
+}
+
+/* Botão de destaque */
+.btn-accent {
+    background-color: #7c3aed;
+    color: white;
+    border: none;
+}
+
+.btn-accent:hover {
+    background-color: #6d28d9;
+    color: white;
+}
+
+/* Estilos para o calendário */
+#calendario-container {
+    margin: 20px 0;
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+}
+
+.datas-selecionadas {
+    margin: 20px 0;
+    background: rgba(30, 41, 59, 0.5);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.datas-selecionadas h3 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: var(--accent-color);
+}
+
+.data-indisponivel {
+    display: inline-flex;
+    align-items: center;
+    margin: 5px;
+    padding: 5px 10px;
+    background: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+    border-radius: 4px;
+}
+
+.btn-remover-data {
+    background: none;
+    border: none;
+    color: #dc3545;
+    font-size: 16px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/* Flatpickr customização */
+.flatpickr-calendar {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--card-border) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    color: var(--text-light) !important;
+}
+
+.flatpickr-day {
+    color: var(--text-light) !important;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+    color: white !important;
+}
+
+.flatpickr-month,
+.flatpickr-weekdays,
+.flatpickr-weekday,
+.flatpickr-current-month,
+.flatpickr-monthDropdown-months,
+.numInputWrapper span.arrowUp,
+.numInputWrapper span.arrowDown,
+.flatpickr-prev-month,
+.flatpickr-next-month {
+    color: var(--text-light) !important;
+    fill: var(--text-light) !important;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg {
+    fill: var(--accent-color) !important;
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-5px);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(5px);
+    }
+}
+
+/* Correção Bug #2 e #4: Layout dos checkboxes em linha */
+.checkbox-group,
+.dias-semana-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+/* Correção Bug #3: Formatação do campo de reajuste */
+.percentual-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.percentual-container input {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-light);
+    margin-right: 8px;
+}
+
+.percentual-container span {
+    font-size: 1.2rem;
+    color: var(--text-light);
+}
+
+.valores-container {
+    margin-top: 20px;
+}
+
+.valor-linha {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed var(--card-border);
+}
+
+.valor-atual {
+    color: var(--text-light);
+}
+
+.valor-ajustado {
+    color: var(--accent-color);
+}
+
+.notification-badge {
+    position: absolute;
+    right: 5px; /* Modificar para 5px */
+    top: 5px; /* Modificar para 5px */
+    background-color: #ef4444;
+    color: white;
+    border-radius: 50%;
+    min-width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 0 5px;
+}
+
+.menu-item {
+    position: relative;
+}
+
+.notification-item {
+    display: flex;
+    padding: 15px;
+    border-bottom: 1px solid #afb0b3;
+    transition: background-color 0.3s;
+}
+
+.notification-unread {
+    background-color: #255271;
+}
+
+.notification-icon {
+    flex: 0 0 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #284d97;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-time {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 5px;
+}
+
+.notification-actions {
+    display: flex;
+    align-items: center;
+}
+
+.btn-mark-read,
+.btn-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 16px;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+    margin-left: 5px;
+}
+
+.btn-mark-read:hover,
+.btn-delete:hover,
+.btn-chat:hover {
+    opacity: 1;
+}
+
+.btn-mark-read {
+    color: #34d399;
+}
+
+.btn-delete {
+    color: #ef4444;
+}

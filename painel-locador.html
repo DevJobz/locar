@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LoCar - Painel Locador</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link href="css/locador.css" rel="stylesheet" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+    </head>
+    <body>
+        <div class="background-container"></div>
+
+        <div class="locador-container">
+            <!-- Sidebar -->
+            <aside class="locador-sidebar" id="sidebar">
+                <div class="locador-sidebar-header">
+                    <i class="fas fa-car-side"></i>
+                    <h2>LoCar Locador</h2>
+                </div>
+
+                <nav class="locador-nav">
+                    <a
+                        href="#"
+                        class="nav-item active"
+                        onclick="mostrarSecao('meuPerfil')"
+                    >
+                        <i class="fas fa-user"></i>
+                        <span>Meu Perfil</span>
+                    </a>
+                    <a
+                        href="#"
+                        class="nav-item"
+                        onclick="mostrarSecao('meusVeiculos')"
+                    >
+                        <i class="fas fa-car"></i>
+                        <span>Meus Veículos</span>
+                    </a>
+                    <a
+                        href="#"
+                        class="nav-item"
+                        onclick="mostrarSecao('solicitacoes')"
+                    >
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Solicitações</span>
+                    </a>
+                    <a
+                        href="#"
+                        class="nav-item"
+                        onclick="mostrarSecao('feedbacks')"
+                    >
+                        <i class="fas fa-star"></i>
+                        <span>Feedbacks</span>
+                    </a>
+                    <a
+                        href="#"
+                        class="nav-item"
+                        onclick="mostrarSecao('notificacoes')"
+                    >
+                        <i class="fas fa-bell"></i>
+                        <span>Notificações</span>
+                    </a>
+                    <a
+                        href="#"
+                        class="nav-item"
+                        onclick="mostrarSecao('configuracoes')"
+                    >
+                        <i class="fas fa-cog"></i>
+                        <span>Configurações</span>
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Botão de menu mobile -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Conteúdo Principal -->
+            <main class="locador-main" id="mainContent">
+                <header class="locador-header">
+                    <h1>Painel do Locador</h1>
+                    <div class="header-actions">
+                        <button onclick="logout()" class="btn btn-danger">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Status da Conta -->
+                <div id="statusConta" class="status-conta"></div>
+
+                <!-- Seções -->
+                <section id="meuPerfil" class="locador-section">
+                    <div class="profile-container">
+                        <div class="profile-header">
+                            <div
+                                id="profilePicture"
+                                class="profile-picture"
+                                onclick="abrirModalFoto()"
+                            ></div>
+                            <div class="profile-info">
+                                <h2 id="profileName" class="profile-name">
+                                    Nome do Locador
+                                </h2>
+                                <span
+                                    id="profileStatus"
+                                    class="profile-status status-active"
+                                    >Conta Ativa</span
+                                >
+                            </div>
+                        </div>
+
+                        <div class="profile-details">
+                            <!-- Informações Pessoais -->
+                            <div class="detail-card">
+                                <h3>
+                                    <i class="fas fa-id-card"></i> Informações
+                                    Pessoais
+                                </h3>
+                                <div class="detail-group">
+                                    <label for="profileFullName"
+                                        >Nome Completo</label
+                                    >
+                                    <input
+                                        type="text"
+                                        id="profileFullName"
+                                        value="João da Silva"
+                                        disabled
+                                    />
+                                </div>
+                                <div class="detail-group">
+                                    <label for="profileCPF">CPF</label>
+                                    <input
+                                        type="text"
+                                        id="profileCPF"
+                                        value="123.456.789-00"
+                                        disabled
+                                    />
+                                </div>
+                                <div class="detail-group">
+                                    <label for="profilePhone">Telefone</label>
+                                    <input
+                                        type="tel"
+                                        id="profilePhone"
+                                        value="(11) 99999-9999"
+                                        disabled
+                                    />
+                                </div>
+                                <div class="detail-group">
+                                    <label for="profileBirthDate"
+                                        >Data de Nascimento</label
+                                    >
+                                    <input
+                                        type="date"
+                                        id="profileBirthDate"
+                                        value="1985-05-15"
+                                        disabled
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Endereço e Documentos (agora em uma única coluna) -->
+                            <div class="detail-card">
+                                <h3>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Endereço
+                                </h3>
+                                <div class="detail-group">
+                                    <label for="profileCEP">CEP</label>
+                                    <input
+                                        type="text"
+                                        id="profileCEP"
+                                        value="01234-567"
+                                        disabled
+                                    />
+                                </div>
+                                <div class="detail-group">
+                                    <label for="profileAddress">Endereço</label>
+                                    <input
+                                        type="text"
+                                        id="profileAddress"
+                                        value="Rua Exemplo, 123"
+                                        disabled
+                                    />
+                                </div>
+
+                                <h3 style="margin-top: 1.5rem">
+                                    <i class="fas fa-file-alt"></i> Documentos
+                                </h3>
+                                <div class="detail-group">
+                                    <label>Tipo de Documento</label>
+                                    <input
+                                        type="hidden"
+                                        id="profileDocType"
+                                        value="cnh"
+                                    />
+                                    <p
+                                        style="
+                                            margin: 0.5rem 0;
+                                            color: var(--text-light);
+                                        "
+                                    >
+                                        CNH
+                                    </p>
+                                </div>
+                                <div class="detail-group">
+                                    <label for="profileDocNumber"
+                                        >Número da CNH</label
+                                    >
+                                    <input
+                                        type="text"
+                                        id="profileDocNumber"
+                                        value="123456789"
+                                        disabled
+                                    />
+                                </div>
+                                <div class="detail-group">
+                                    <label for="profileDocIssue"
+                                        >Expedição</label
+                                    >
+                                    <input
+                                        type="date"
+                                        id="profileDocIssue"
+                                        value=""
+                                        disabled
+                                    />
+                                </div>
+                                <div class="detail-group">
+                                    <label for="profileDocExpiry"
+                                        >Validade</label
+                                    >
+                                    <input
+                                        type="date"
+                                        id="profileDocExpiry"
+                                        value=""
+                                        disabled
+                                    />
+                                    <small
+                                        id="cnhExpiryWarning"
+                                        style="color: red; display: none"
+                                        >CNH vencida!</small
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button
+                                class="btn btn-primary"
+                                onclick="salvarPerfil()"
+                            >
+                                <i class="fas fa-save"></i> Salvar Alterações
+                            </button>
+                            <button
+                                class="btn btn-secondary"
+                                onclick="cancelarEdicao()"
+                            >
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Modal de upload de foto -->
+                <div id="photoModal" class="photo-modal">
+                    <div class="photo-modal-content">
+                        <h3>
+                            <i class="fas fa-camera"></i> Alterar Foto de Perfil
+                        </h3>
+
+                        <img
+                            id="photoPreview"
+                            class="photo-preview"
+                            alt="Pré-visualização"
+                        />
+
+                        <input
+                            type="file"
+                            id="photoInput"
+                            accept="image/*"
+                            style="display: none"
+                        />
+
+                        <button
+                            class="btn btn-accent"
+                            onclick="document.getElementById('photoInput').click()"
+                        >
+                            <i class="fas fa-upload"></i> Selecionar Foto
+                        </button>
+
+                        <div class="photo-actions">
+                            <button
+                                class="btn btn-primary"
+                                onclick="salvarFoto()"
+                                id="savePhotoBtn"
+                                disabled
+                            >
+                                <i class="fas fa-check"></i> Salvar
+                            </button>
+                            <button
+                                class="btn btn-secondary"
+                                onclick="fecharModalFoto()"
+                            >
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <section
+                    id="meusVeiculos"
+                    class="locador-section"
+                    style="display: none"
+                >
+                    <h2><i class="fas fa-car"></i> Meus Veículos</h2>
+
+                    <!-- Botão para abrir o cadastro em etapas -->
+                    <button
+                        class="btn btn-primary"
+                        onclick="iniciarCadastroVeiculo(false)"
+                    >
+                        <i class="fas fa-plus"></i> Cadastrar Novo Veículo
+                    </button>
+
+                    <!-- Lista de veículos cadastrados -->
+                    <div id="listaVeiculos" class="veiculos-lista"></div>
+
+                    <!-- Modal de cadastro em etapas -->
+                    <div id="modalCadastroVeiculo" class="modal">
+                        <div class="modal-content" style="max-width: 800px">
+                            <!-- Adicione o botão de fechar no topo direito -->
+                            <button
+                                class="btn-fechar-modal"
+                                onclick="fecharCadastroVeiculo()"
+                            >
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <!-- Barra de progresso -->
+                            <div
+                                class="progress-container"
+                                style="margin-bottom: 1.5rem"
+                            >
+                                <div
+                                    class="progress-bar"
+                                    id="progressBarVeiculo"
+                                ></div>
+                                <div
+                                    class="progress-text"
+                                    id="progressTextVeiculo"
+                                >
+                                    Etapa 1 de 6
+                                </div>
+                            </div>
+
+                            <!-- Formulário em etapas -->
+                            <form id="formCadastroVeiculo">
+                                <!-- Etapa 1 - Tipo de Veículo -->
+                                <div
+                                    id="etapa1"
+                                    class="etapa-cadastro active-etapa"
+                                >
+                                    <h3>
+                                        <i class="fas fa-car-side"></i> Tipo de
+                                        Veículo
+                                    </h3>
+
+                                    <div class="input-group">
+                                        <label for="tipoVeiculo"
+                                            >Gênero do Veículo</label
+                                        >
+                                        <select
+                                            id="tipoVeiculo"
+                                            class="input-field"
+                                            required
+                                            onchange="atualizarSubtipos()"
+                                        >
+                                            <option value="">Selecione</option>
+                                            <option value="carro">Carro</option>
+                                            <option value="moto">Moto</option>
+                                            <option value="van">Van</option>
+                                            <option value="bicicleta">
+                                                Bicicleta
+                                            </option>
+                                            <option value="patinete">
+                                                Patinete
+                                            </option>
+                                            <option value="scooter">
+                                                Scooter
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div
+                                        class="input-group"
+                                        id="subtipoContainer"
+                                        style="display: none"
+                                    >
+                                        <label for="subtipoVeiculo"
+                                            >Tipo de Propulsão</label
+                                        >
+                                        <select
+                                            id="subtipoVeiculo"
+                                            class="input-field"
+                                            required
+                                        >
+                                            <!-- Preenchido dinamicamente -->
+                                        </select>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button
+                                            type="button"
+                                            class="btn btn-next"
+                                            onclick="proximaEtapa(2)"
+                                        >
+                                            Próximo
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Etapa 2 - Detalhes Técnicos -->
+                                <div id="etapa2" class="etapa-cadastro">
+                                    <h3>
+                                        <i class="fas fa-cogs"></i> Detalhes
+                                        Técnicos
+                                    </h3>
+
+                                    <!-- Container para detalhes de combustão (aparece apenas quando relevante) -->
+                                    <div
+                                        id="combustaoContainer"
+                                        style="display: none"
+                                    >
+                                        <div class="input-group">
+                                            <label>Tipo de Combustível</label>
+                                            <div class="checkbox-group">
+                                                <label class="checkbox-option">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="combustivel"
+                                                        value="gasolina"
+                                                    />
+                                                    <span
+                                                        class="checkbox-custom"
+                                                    ></span>
+                                                    <span>Gasolina</span>
+                                                </label>
+                                                <label class="checkbox-option">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="combustivel"
+                                                        value="etanol"
+                                                    />
+                                                    <span
+                                                        class="checkbox-custom"
+                                                    ></span>
+                                                    <span>Etanol</span>
+                                                </label>
+                                                <label class="checkbox-option">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="combustivel"
+                                                        value="s10"
+                                                    />
+                                                    <span
+                                                        class="checkbox-custom"
+                                                    ></span>
+                                                    <span>S-10</span>
+                                                </label>
+                                                <label class="checkbox-option">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="combustivel"
+                                                        value="s500"
+                                                    />
+                                                    <span
+                                                        class="checkbox-custom"
+                                                    ></span>
+                                                    <span>S-500</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            class="input-group"
+                                            id="preferenciaCombustivelContainer"
+                                            style="display: none"
+                                        >
+                                            <label for="preferenciaCombustivel"
+                                                >Combustível Preferencial</label
+                                            >
+                                            <select
+                                                id="preferenciaCombustivel"
+                                                class="input-field"
+                                            >
+                                                <!-- Preenchido dinamicamente -->
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Container para detalhes elétricos (aparece apenas quando relevante) -->
+                                    <div
+                                        id="eletricoContainer"
+                                        style="display: none"
+                                    >
+                                        <div class="input-group">
+                                            <label>Tipo de Elétrico</label>
+                                            <div class="checkbox-group">
+                                                <label class="checkbox-option">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="tensao"
+                                                        value="110v"
+                                                    />
+                                                    <span
+                                                        class="checkbox-custom"
+                                                    ></span>
+                                                    <span>110V</span>
+                                                </label>
+                                                <label class="checkbox-option">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="tensao"
+                                                        value="220v"
+                                                    />
+                                                    <span
+                                                        class="checkbox-custom"
+                                                    ></span>
+                                                    <span>220V</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Motorização (aparece apenas para veículos motorizados) -->
+                                    <div
+                                        class="input-group"
+                                        id="motorizacaoContainer"
+                                        style="display: none"
+                                    >
+                                        <label for="motorizacao"
+                                            >Motorização</label
+                                        >
+                                        <select
+                                            id="motorizacao"
+                                            class="input-field"
+                                        >
+                                            <!-- Preenchido dinamicamente -->
+                                        </select>
+                                    </div>
+
+                                    <!-- Câmbio (não aparece para bicicletas, patinetes e scooters) -->
+                                    <div
+                                        class="input-group"
+                                        id="cambioContainer"
+                                        style="display: none"
+                                    >
+                                        <label for="tipoCambio"
+                                            >Tipo de Câmbio</label
+                                        >
+                                        <select
+                                            id="tipoCambio"
+                                            class="input-field"
+                                        >
+                                            <!-- Preenchido dinamicamente -->
+                                        </select>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button
+                                            type="button"
+                                            class="btn btn-back"
+                                            onclick="voltarEtapa(1)"
+                                        >
+                                            Voltar
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="btn btn-next"
+                                            onclick="proximaEtapa(3)"
+                                        >
+                                            Próximo
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Etapa 3 - Características do Veículo -->
+                                <div id="etapa3" class="etapa-cadastro">
+                                    <h3>
+                                        <i class="fas fa-info-circle"></i>
+                                        Características
+                                    </h3>
+
+                                    <div class="input-group">
+                                        <label for="tipoCarroceria"
+                                            >Tipo de Veículo</label
+                                        >
+                                        <select
+                                            id="tipoCarroceria"
+                                            class="input-field"
+                                            required
+                                        >
+                                            <!-- Preenchido dinamicamente -->
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="especieVeiculo"
+                                            >Espécie de Veículo</label
+                                        >
+                                        <select
+                                            id="especieVeiculo"
+                                            class="input-field"
+                                            required
+                                            onchange="atualizarCapacidades()"
+                                        >
+                                            <option value="">Selecione</option>
+                                            <option value="passageiros">
+                                                Passageiros
+                                            </option>
+                                            <option value="carga">Carga</option>
+                                            <option value="misto">
+                                                Misto (Passageiros + Carga)
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div
+                                        class="input-group"
+                                        id="passageirosContainer"
+                                        style="display: none"
+                                    >
+                                        <label for="quantidadePassageiros"
+                                            >Quantidade de Passageiros</label
+                                        >
+                                        <input
+                                            type="number"
+                                            id="quantidadePassageiros"
+                                            class="input-field"
+                                            min="1"
+                                            max="50"
+                                        />
+                                    </div>
+
+                                    <div
+                                        class="input-group"
+                                        id="cargaContainer"
+                                        style="display: none"
+                                    >
+                                        <label for="capacidadeCarga"
+                                            >Capacidade de Carga (kg)</label
+                                        >
+                                        <input
+                                            type="number"
+                                            id="capacidadeCarga"
+                                            class="input-field"
+                                            min="1"
+                                        />
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button
+                                            type="button"
+                                            class="btn btn-back"
+                                            onclick="voltarEtapa(2)"
+                                        >
+                                            Voltar
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="btn btn-next"
+                                            onclick="proximaEtapa(4)"
+                                        >
+                                            Próximo
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Etapa 4 - Identificação do Veículo -->
+                                <div id="etapa4" class="etapa-cadastro">
+                                    <h3>
+                                        <i class="fas fa-id-card"></i>
+                                        Identificação
+                                    </h3>
+
+                                    <div class="input-group">
+                                        <label for="marcaVeiculo">Marca</label>
+                                        <select
+                                            id="marcaVeiculo"
+                                            class="input-field"
+                                            required
+                                            onchange="atualizarModelos()"
+                                        >
+                                            <!-- Preenchido dinamicamente -->
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="modeloVeiculo"
+                                            >Modelo</label
+                                        >
+                                        <select
+                                            id="modeloVeiculo"
+                                            class="input-field"
+                                            required
+                                        >
+                                            <option value="">
+                                                Selecione a marca primeiro
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="anoVeiculo">Ano</label>
+                                        <select
+                                            id="anoVeiculo"
+                                            class="input-field"
+                                            required
+                                        >
+                                            <!-- Preenchido dinamicamente com anos de 1900 até o atual -->
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="documentoVeiculo"
+                                            >Documento do Veículo</label
+                                        >
+                                        <input
+                                            type="file"
+                                            id="documentoVeiculo"
+                                            name="documentoVeiculo"
+                                            class="input-field"
+                                            accept=".pdf,.png,.jpg,.jpeg"
+                                            required
+                                        />
+                                    </div>
+                                    <div id="documentoPreview"></div>
+
+                                    <div class="form-actions">
+                                        <button
+                                            type="button"
+                                            class="btn btn-back"
+                                            onclick="voltarEtapa(3)"
+                                        >
+                                            Voltar
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="btn btn-next"
+                                            onclick="proximaEtapa(5)"
+                                        >
+                                            Próximo
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Etapa 5 - Localização e Imagens -->
+                                <div id="etapa5" class="etapa-cadastro">
+                                    <h3>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        Localização e Imagens
+                                    </h3>
+
+                                    <div class="input-group">
+                                        <label for="cepVeiculo"
+                                            >CEP do Local</label
+                                        >
+                                        <input
+                                            type="text"
+                                            id="cepVeiculo"
+                                            class="input-field"
+                                            placeholder="Ex: 12345-678"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="enderecoVeiculo"
+                                            >Endereço do Local</label
+                                        >
+                                        <input
+                                            type="text"
+                                            id="enderecoVeiculo"
+                                            class="input-field"
+                                            placeholder="Preenchido automaticamente"
+                                            readonly
+                                            required
+                                        />
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label
+                                            >Imagens do Veículo (4 obrigatórias
+                                            + 1 opcional)</label
+                                        >
+                                        <div class="image-upload-container">
+                                            <div
+                                                class="image-upload-box"
+                                                onclick="document.getElementById('imagemFrontal').click()"
+                                            >
+                                                <input
+                                                    type="file"
+                                                    id="imagemFrontal"
+                                                    accept="image/*"
+                                                    style="display: none"
+                                                    required
+                                                />
+                                                <i class="fas fa-camera"></i>
+                                                <span
+                                                    >Frontal (Obrigatória)</span
+                                                >
+                                                <img
+                                                    id="previewFrontal"
+                                                    style="display: none"
+                                                />
+                                            </div>
+                                            <div
+                                                class="image-upload-box"
+                                                onclick="document.getElementById('imagemLateralDireita').click()"
+                                            >
+                                                <input
+                                                    type="file"
+                                                    id="imagemLateralDireita"
+                                                    accept="image/*"
+                                                    style="display: none"
+                                                    required
+                                                />
+                                                <i class="fas fa-camera"></i>
+                                                <span
+                                                    >Lateral Direita
+                                                    (Obrigatória)</span
+                                                >
+                                                <img
+                                                    id="previewLateralDireita"
+                                                    style="display: none"
+                                                />
+                                            </div>
+                                            <div
+                                                class="image-upload-box"
+                                                onclick="document.getElementById('imagemLateralEsquerda').click()"
+                                            >
+                                                <input
+                                                    type="file"
+                                                    id="imagemLateralEsquerda"
+                                                    accept="image/*"
+                                                    style="display: none"
+                                                    required
+                                                />
+                                                <i class="fas fa-camera"></i>
+                                                <span
+                                                    >Lateral Esquerda
+                                                    (Obrigatória)</span
+                                                >
+                                                <img
+                                                    id="previewLateralEsquerda"
+                                                    style="display: none"
+                                                />
+                                            </div>
+                                            <div
+                                                class="image-upload-box"
+                                                onclick="document.getElementById('imagemTraseira').click()"
+                                            >
+                                                <input
+                                                    type="file"
+                                                    id="imagemTraseira"
+                                                    accept="image/*"
+                                                    style="display: none"
+                                                    required
+                                                />
+                                                <i class="fas fa-camera"></i>
+                                                <span
+                                                    >Traseira
+                                                    (Obrigatória)</span
+                                                >
+                                                <img
+                                                    id="previewTraseira"
+                                                    style="display: none"
+                                                />
+                                            </div>
+                                            <div
+                                                class="image-upload-box"
+                                                onclick="document.getElementById('imagemInterior').click()"
+                                            >
+                                                <input
+                                                    type="file"
+                                                    id="imagemInterior"
+                                                    accept="image/*"
+                                                    style="display: none"
+                                                />
+                                                <i class="fas fa-camera"></i>
+                                                <span>Interior (Opcional)</span>
+                                                <img
+                                                    id="previewInterior"
+                                                    style="display: none"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button
+                                            type="button"
+                                            class="btn btn-back"
+                                            onclick="voltarEtapa(4)"
+                                        >
+                                            Voltar
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="btn btn-next"
+                                            onclick="proximaEtapa(6)"
+                                        >
+                                            Próximo
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Etapa 6 - Metodologia de Locação -->
+                                <div id="etapa6" class="etapa-cadastro">
+                                    <h3>
+                                        <i class="fas fa-calendar-alt"></i>
+                                        Metodologia de Locação
+                                    </h3>
+
+                                    <div class="input-group">
+                                        <label
+                                            >Dias da Semana Disponíveis</label
+                                        >
+                                        <div class="dias-semana-container">
+                                            <label class="checkbox-option">
+                                                <input
+                                                    type="checkbox"
+                                                    name="diasSemana"
+                                                    value="segunda"
+                                                />
+                                                <span
+                                                    class="checkbox-custom"
+                                                ></span>
+                                                <span>Segunda</span>
+                                            </label>
+                                            <label class="checkbox-option">
+                                                <input
+                                                    type="checkbox"
+                                                    name="diasSemana"
+                                                    value="terca"
+                                                />
+                                                <span
+                                                    class="checkbox-custom"
+                                                ></span>
+                                                <span>Terça</span>
+                                            </label>
+                                            <label class="checkbox-option">
+                                                <input
+                                                    type="checkbox"
+                                                    name="diasSemana"
+                                                    value="quarta"
+                                                />
+                                                <span
+                                                    class="checkbox-custom"
+                                                ></span>
+                                                <span>Quarta</span>
+                                            </label>
+                                            <label class="checkbox-option">
+                                                <input
+                                                    type="checkbox"
+                                                    name="diasSemana"
+                                                    value="quinta"
+                                                />
+                                                <span
+                                                    class="checkbox-custom"
+                                                ></span>
+                                                <span>Quinta</span>
+                                            </label>
+                                            <label class="checkbox-option">
+                                                <input
+                                                    type="checkbox"
+                                                    name="diasSemana"
+                                                    value="sexta"
+                                                />
+                                                <span
+                                                    class="checkbox-custom"
+                                                ></span>
+                                                <span>Sexta</span>
+                                            </label>
+                                            <label class="checkbox-option">
+                                                <input
+                                                    type="checkbox"
+                                                    name="diasSemana"
+                                                    value="sabado"
+                                                />
+                                                <span
+                                                    class="checkbox-custom"
+                                                ></span>
+                                                <span>Sábado</span>
+                                            </label>
+                                            <label class="checkbox-option">
+                                                <input
+                                                    type="checkbox"
+                                                    name="diasSemana"
+                                                    value="domingo"
+                                                />
+                                                <span
+                                                    class="checkbox-custom"
+                                                ></span>
+                                                <span>Domingo</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label for="periodoDisponibilidade"
+                                            >Período de Disponibilidade</label
+                                        >
+                                        <select
+                                            id="periodoDisponibilidade"
+                                            class="input-field"
+                                            onchange="atualizarHorarios()"
+                                        >
+                                            <option value="integral">
+                                                Integralmente (sem restrição)
+                                            </option>
+                                            <option value="parcial">
+                                                Parcialmente (especificar
+                                                horários)
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div
+                                        id="horariosContainer"
+                                        style="display: none"
+                                    >
+                                        <div class="input-group">
+                                            <label>Horários Disponíveis</label>
+                                            <div id="horariosAdicionados"></div>
+                                            <button
+                                                type="button"
+                                                class="btn btn-accent"
+                                                onclick="adicionarHorario()"
+                                            >
+                                                <i class="fas fa-plus"></i>
+                                                Adicionar Horário
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label>Metodologia de Cobrança</label>
+                                        <div class="pricing-methods-container">
+                                            <div class="pricing-method">
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="metodoCobranca"
+                                                        value="minutagem"
+                                                        onchange="togglePrecoInput(this)"
+                                                    />
+                                                    <span>Minutagem</span>
+                                                    <input
+                                                        type="text"
+                                                        class="price-input"
+                                                        name="precoMinutagem"
+                                                        placeholder="R$"
+                                                        disabled
+                                                        onblur="formatarMoeda(this)"
+                                                        onfocus="desformatarMoeda(this)"
+                                                    />
+                                                </label>
+                                            </div>
+                                            <div class="pricing-method">
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="metodoCobranca"
+                                                        value="hora"
+                                                        onchange="togglePrecoInput(this)"
+                                                    />
+                                                    <span>Por Hora</span>
+                                                    <input
+                                                        type="text"
+                                                        class="price-input"
+                                                        name="precoHora"
+                                                        placeholder="R$"
+                                                        disabled
+                                                        onblur="formatarMoeda(this)"
+                                                        onfocus="desformatarMoeda(this)"
+                                                    />
+                                                </label>
+                                            </div>
+                                            <div class="pricing-method">
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="metodoCobranca"
+                                                        value="diaria"
+                                                        onchange="togglePrecoInput(this)"
+                                                    />
+                                                    <span>Diária</span>
+                                                    <input
+                                                        type="text"
+                                                        class="price-input"
+                                                        name="precoDiaria"
+                                                        placeholder="R$"
+                                                        disabled
+                                                        onblur="formatarMoeda(this)"
+                                                        onfocus="desformatarMoeda(this)"
+                                                    />
+                                                </label>
+                                            </div>
+                                            <div class="pricing-method">
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="metodoCobranca"
+                                                        value="semanal"
+                                                        onchange="togglePrecoInput(this)"
+                                                    />
+                                                    <span>Semanal</span>
+                                                    <input
+                                                        type="text"
+                                                        class="price-input"
+                                                        name="precoSemanal"
+                                                        placeholder="R$"
+                                                        disabled
+                                                        onblur="formatarMoeda(this)"
+                                                        onfocus="desformatarMoeda(this)"
+                                                    />
+                                                </label>
+                                            </div>
+                                            <div class="pricing-method">
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="metodoCobranca"
+                                                        value="mensal"
+                                                        onchange="togglePrecoInput(this)"
+                                                    />
+                                                    <span>Mensal</span>
+                                                    <input
+                                                        type="text"
+                                                        class="price-input"
+                                                        name="precoMensal"
+                                                        placeholder="R$"
+                                                        disabled
+                                                        onblur="formatarMoeda(this)"
+                                                        onfocus="desformatarMoeda(this)"
+                                                    />
+                                                </label>
+                                            </div>
+                                            <div class="pricing-method">
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="metodoCobranca"
+                                                        value="bimestral"
+                                                        onchange="togglePrecoInput(this)"
+                                                    />
+                                                    <span>Bimestral</span>
+                                                    <input
+                                                        type="text"
+                                                        class="price-input"
+                                                        name="precoBimestral"
+                                                        placeholder="R$"
+                                                        disabled
+                                                        onblur="formatarMoeda(this)"
+                                                        onfocus="desformatarMoeda(this)"
+                                                    />
+                                                </label>
+                                            </div>
+                                            <div class="pricing-method">
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="metodoCobranca"
+                                                        value="trimestral"
+                                                        onchange="togglePrecoInput(this)"
+                                                    />
+                                                    <span>Trimestral</span>
+                                                    <input
+                                                        type="text"
+                                                        class="price-input"
+                                                        name="precoTrimestral"
+                                                        placeholder="R$"
+                                                        disabled
+                                                        onblur="formatarMoeda(this)"
+                                                        onfocus="desformatarMoeda(this)"
+                                                    />
+                                                </label>
+                                            </div>
+                                            <div class="pricing-method">
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="metodoCobranca"
+                                                        value="anual"
+                                                        onchange="togglePrecoInput(this)"
+                                                    />
+                                                    <span>Anual</span>
+                                                    <input
+                                                        type="text"
+                                                        class="price-input"
+                                                        name="precoAnual"
+                                                        placeholder="R$"
+                                                        disabled
+                                                        onblur="formatarMoeda(this)"
+                                                        onfocus="desformatarMoeda(this)"
+                                                    />
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label class="checkbox-option">
+                                            <input
+                                                type="checkbox"
+                                                id="tanqueCheio"
+                                                required
+                                            />
+                                            <span
+                                                class="checkbox-custom"
+                                            ></span>
+                                            <span
+                                                >Concordo em entregar o veículo
+                                                sempre com o tanque cheio</span
+                                            >
+                                        </label>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <label class="checkbox-option">
+                                            <input
+                                                type="checkbox"
+                                                id="termosCondicoes"
+                                                required
+                                            />
+                                            <span
+                                                class="checkbox-custom"
+                                            ></span>
+                                            <span
+                                                >Li e concordo com os
+                                                <a
+                                                    href="#"
+                                                    onclick="abrirTermosCondicoes()"
+                                                    >Termos e Condições</a
+                                                ></span
+                                            >
+                                        </label>
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button
+                                            type="button"
+                                            class="btn btn-back"
+                                            onclick="voltarEtapa(5)"
+                                        >
+                                            Voltar
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="btn btn-secondary"
+                                            id="btnContinuarDepois"
+                                            onclick="salvarRascunho()"
+                                        >
+                                            <i class="fas fa-save"></i>
+                                            Continuar Depois
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            class="btn btn-primary"
+                                            id="btnSalvarVeiculo"
+                                        >
+                                            <i class="fas fa-check"></i> Salvar
+                                            Veículo
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Modal de Termos e Condições -->
+                    <div id="modalTermos" class="modal">
+                        <div
+                            class="modal-content"
+                            style="
+                                max-width: 800px;
+                                max-height: 80vh;
+                                overflow-y: auto;
+                            "
+                        >
+                            <h3>Termos e Condições de Locação</h3>
+                            <div class="terms-content">
+                                <!-- Conteúdo dos termos e condições -->
+                                <p>
+                                    1. O locador concorda em disponibilizar o
+                                    veículo nas condições descritas no cadastro.
+                                </p>
+                                <p>
+                                    2. O veículo deve estar em perfeitas
+                                    condições de uso, com documentação em dia.
+                                </p>
+                                <p>
+                                    3. O locador é responsável por manter o
+                                    veículo limpo e com combustível no tanque.
+                                </p>
+                                <p>
+                                    4. Qualquer problema mecânico deve ser
+                                    informado imediatamente à plataforma.
+                                </p>
+                                <p>
+                                    5. O locador concorda em respeitar os
+                                    horários e dias de disponibilidade
+                                    informados.
+                                </p>
+                                <p>
+                                    6. O valor da locação deve ser atualizado
+                                    periodicamente para refletir o mercado.
+                                </p>
+                                <p>
+                                    7. O locador é responsável por todas as
+                                    infrações cometidas com o veículo durante o
+                                    período de locação.
+                                </p>
+                                <p>
+                                    8. A plataforma pode suspender contas que
+                                    não cumprirem com os termos acordados.
+                                </p>
+                                <p>
+                                    9. O locador concorda em receber avaliações
+                                    dos locatários sobre o estado do veículo.
+                                </p>
+                                <p>
+                                    10. O locador deve manter um canal de
+                                    comunicação aberto com os locatários.
+                                </p>
+                            </div>
+                            <div class="terms-footer">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    onclick="aceitarTermos()"
+                                >
+                                    <i class="fas fa-check"></i> Li e concordo
+                                    com os termos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section
+                    id="solicitacoes"
+                    class="locador-section"
+                    style="display: none"
+                >
+                    <h2>
+                        <i class="fas fa-calendar-check"></i> Solicitações de
+                        Locação
+                    </h2>
+                    <div id="solicitacoesList" class="solicitacoes-list"></div>
+                </section>
+
+                <section
+                    id="feedbacks"
+                    class="locador-section"
+                    style="display: none"
+                >
+                    <h2><i class="fas fa-star"></i> Feedbacks Recebidos</h2>
+                    <div id="feedbacksList" class="feedbacks-list"></div>
+                </section>
+
+                <section
+                    id="notificacoes"
+                    class="locador-section"
+                    style="display: none"
+                >
+                    <h2><i class="fas fa-bell"></i> Notificações</h2>
+
+                    <!-- Container para listar notificações -->
+                    <div
+                        id="listaNotificacoes"
+                        class="notificacoes-lista"
+                    ></div>
+
+                    <hr style="margin: 30px 0" />
+
+                    <h3>Configurações de Notificação</h3>
+                    <div class="notification-toggle">
+                        <span>Receber notificações por e-mail</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="emailNotifications" />
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="notification-toggle">
+                        <span>Receber notificações por SMS</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="smsNotifications" />
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </section>
+
+                <section
+                    id="configuracoes"
+                    class="locador-section"
+                    style="display: none"
+                >
+                    <h2><i class="fas fa-cog"></i> Configurações</h2>
+                    <p>
+                        Esta seção está em desenvolvimento e será implementada
+                        em breve.
+                    </p>
+                </section>
+            </main>
+        </div>
+
+        <!-- Visualizador de Imagens -->
+        <div id="visualizadorImagens" class="visualizador-imagens">
+            <button class="btn-fechar" onclick="fecharVisualizador()">×</button>
+            <div class="navegacao-imagens">
+                <button class="btn-navegacao" onclick="mudarImagem(-1)">
+                    ←
+                </button>
+                <button class="btn-navegacao" onclick="mudarImagem(1)">
+                    →
+                </button>
+            </div>
+            <img
+                id="imagemVisualizador"
+                class="imagem-full"
+                src=""
+                alt="Visualização do veículo"
+            />
+            <div id="tituloImagem" class="titulo-imagem"></div>
+        </div>
+
+        <!-- Chat Modal -->
+        <div id="chatModal" class="modal-chat" style="display: none">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h3>Chat</h3>
+                    <button onclick="fecharChat()" class="btn-fechar">×</button>
+                </div>
+                <div id="chatMessages" class="chat-messages"></div>
+                <div class="chat-input">
+                    <input
+                        type="text"
+                        id="chatMessageInput"
+                        placeholder="Digite sua mensagem..."
+                    />
+                    <button onclick="enviarMensagemChat()" class="btn-enviar">
+                        Enviar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <script src="js/locador.js"></script>
+        <script src="js/chat-functions.js"></script>
+    </body>
+</html>

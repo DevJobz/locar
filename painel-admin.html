@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="LoCar - Painel Administrativo" />
+        <title>LoCar - Painel Admin</title>
+        <link href="css/admin.css" rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <style>
+            .language-switcher {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                display: flex;
+                gap: 10px;
+                z-index: 1000;
+            }
+            .lang-btn {
+                cursor: pointer;
+                transition: transform 0.2s;
+            }
+            .lang-btn:hover {
+                transform: scale(1.1);
+            }
+            .lang-btn img {
+                width: 30px;
+                height: 20px;
+                border: 1px solid #ddd;
+                border-radius: 3px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="background-container"></div>
+
+        <!-- Botão de menu mobile -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+
+        <!-- Seletor de idiomas -->
+        <div class="language-switcher">
+            <div class="lang-btn" onclick="setLanguage('pt')">
+                <img src="https://flagcdn.com/w40/br.png" alt="Português" />
+            </div>
+            <div class="lang-btn" onclick="setLanguage('en')">
+                <img src="https://flagcdn.com/w40/us.png" alt="English" />
+            </div>
+            <div class="lang-btn" onclick="setLanguage('es')">
+                <img src="https://flagcdn.com/w40/es.png" alt="Español" />
+            </div>
+        </div>
+
+        <div class="admin-container">
+            <!-- Sidebar -->
+            <aside class="admin-sidebar" id="adminSidebar">
+                <div class="admin-sidebar-header">
+                    <h2>LoCar Admin</h2>
+                </div>
+
+                <nav class="admin-nav">
+                    <a
+                        href="#"
+                        class="nav-item active"
+                        data-section="dashboard"
+                    >
+                        <i>📊</i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="usuarios">
+                        <i>👥</i>
+                        <span>Usuários</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="locacoes">
+                        <i>🚗</i>
+                        <span>Locações</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="veiculos">
+                        <i>🔧</i>
+                        <span>Veículos</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="relatorios">
+                        <i>📈</i>
+                        <span>Relatórios</span>
+                    </a>
+                    <a href="#" class="nav-item" data-section="configuracoes">
+                        <i>⚙️</i>
+                        <span>Configurações</span>
+                    </a>
+                </nav>
+
+                <div style="margin-top: auto; padding-top: 1rem">
+                    <button
+                        onclick="logout()"
+                        class="btn btn-danger"
+                        style="width: 100%"
+                    >
+                        <i>🚪</i>
+                        <span id="logoutBtnText">Sair</span>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Conteúdo Principal -->
+            <main class="admin-main">
+                <header class="admin-header">
+                    <h1 id="adminTitle" data-section="dashboard">Dashboard</h1>
+                    <div class="header-actions"></div>
+                </header>
+
+                <!-- Seção Dashboard -->
+                <section id="dashboard" class="admin-section fade-in">
+                    <div class="dashboard-cards">
+                        <div class="dashboard-card">
+                            <h2 id="totalUsuarios">0</h2>
+                            <p id="usuariosTotaisText">Usuários Totais</p>
+                        </div>
+                        <div class="dashboard-card">
+                            <h2 id="totalLocadores">0</h2>
+                            <p id="locadoresText">Locadores</p>
+                        </div>
+                        <div class="dashboard-card">
+                            <h2 id="totalLocatarios">0</h2>
+                            <p id="locatariosText">Locatários</p>
+                        </div>
+                        <div class="dashboard-card">
+                            <h2 id="totalPendentes">0</h2>
+                            <p id="cadastrosPendentesText">
+                                Cadastros Pendentes
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="graficoStatusUsuarios"></canvas>
+                    </div>
+                </section>
+
+                <!-- Seção Usuários -->
+                <section
+                    id="usuarios"
+                    class="admin-section"
+                    style="display: none"
+                >
+                    <div id="userFilters" class="user-filters">
+                        <select id="filterStatus">
+                            <option value="all" id="filterAllStatus">
+                                Todos Status
+                            </option>
+                            <option value="pendente" id="filterPendente">
+                                Pendentes
+                            </option>
+                            <option value="aprovado" id="filterAprovado">
+                                Aprovados
+                            </option>
+                            <option value="recusado" id="filterRecusado">
+                                Recusados
+                            </option>
+                        </select>
+                        <select id="filterTipo">
+                            <option value="all" id="filterAllTipos">
+                                Todos Tipos
+                            </option>
+                            <option value="locador" id="filterLocador">
+                                Locador
+                            </option>
+                            <option value="locatario" id="filterLocatario">
+                                Locatário
+                            </option>
+                        </select>
+                        <input
+                            type="text"
+                            id="filterLocalizacao"
+                            placeholder="Filtrar por Localização"
+                        />
+                        <button id="aplicarFiltroBtn" class="btn btn-primary">
+                            Aplicar Filtro
+                        </button>
+                    </div>
+
+                    <h3 id="pendentesTitle">⏳ Cadastros Pendentes</h3>
+                    <div id="pendentesList" class="user-list"></div>
+
+                    <h3 id="aprovadosTitle" style="margin-top: 2rem">
+                        ✅ Usuários Aprovados
+                    </h3>
+                    <div id="aprovadosList" class="user-list"></div>
+
+                    <h3 id="recusadosTitle" style="margin-top: 2rem">
+                        ❌ Usuários Recusados
+                    </h3>
+                    <div id="recusadosList" class="user-list"></div>
+                </section>
+
+                <!-- Seção Locações -->
+                <section
+                    id="locacoes"
+                    class="admin-section"
+                    style="display: none"
+                >
+                    <div id="locacoesFilters" class="locacoes-filters">
+                        <input
+                            type="text"
+                            id="filterLocacaoLocal"
+                            placeholder="Filtrar por Localização"
+                        />
+                        <select id="filterLocacaoTipo">
+                            <option value="all" id="filterAllLocacoes">
+                                Todos
+                            </option>
+                            <option value="locador" id="filterLocadorLocacao">
+                                Locador
+                            </option>
+                            <option
+                                value="locatario"
+                                id="filterLocatarioLocacao"
+                            >
+                                Locatário
+                            </option>
+                        </select>
+                        <button
+                            id="aplicarFiltroLocacoesBtn"
+                            class="btn btn-primary"
+                        >
+                            Aplicar Filtro
+                        </button>
+                    </div>
+                    <h3 id="locacoesTitle">🚗 Histórico de Locações</h3>
+                    <div id="locacoesList" class="locacoes-list"></div>
+                </section>
+
+                <!-- Seção Veículos -->
+                <section
+                    id="veiculos"
+                    class="admin-section"
+                    style="display: none"
+                >
+                    <div id="veiculosFilters" class="veiculos-filters">
+                        <!-- Substitua os placeholders atuais por: -->
+                        <input
+                            type="text"
+                            id="filterModelo"
+                            placeholder="Filtrar por Modelo"
+                            data-i18n-placeholder="filtrarPorModelo"
+                        />
+                        <input
+                            type="text"
+                            id="filterTipoVeiculo"
+                            placeholder="Filtrar por Tipo"
+                            data-i18n-placeholder="filtrarPorTipo"
+                        />
+                        <input
+                            type="number"
+                            id="filterAno"
+                            placeholder="Filtrar por Ano"
+                            data-i18n-placeholder="filtrarPorAno"
+                        />
+                        <input
+                            type="text"
+                            id="filterLocalVeiculo"
+                            placeholder="Filtrar por Localização"
+                        />
+                        <button
+                            id="aplicarFiltroVeiculosBtn"
+                            class="btn btn-primary"
+                        >
+                            Aplicar Filtro
+                        </button>
+                    </div>
+                    <h3 id="veiculosTitle">🚗 Veículos Cadastrados</h3>
+                    <div id="veiculosList" class="veiculos-list"></div>
+                </section>
+
+                <!-- Seção Relatórios -->
+                <section
+                    id="relatorios"
+                    class="admin-section"
+                    style="display: none"
+                >
+                    <div id="relatorioFilters" class="relatorio-filters">
+                        <input
+                            type="text"
+                            id="filterRelatorioCidade"
+                            placeholder="Filtrar por Cidade"
+                        />
+                        <select id="filterRelatorioTipoVeiculo">
+                            <option
+                                value="all"
+                                data-i18n="todososTiposDeVeículo"
+                            >
+                                Todos os Tipos de Veículo
+                            </option>
+                            <option value="carro" data-i18n="carro">
+                                Carro
+                            </option>
+                            <option value="moto" data-i18n="moto">Moto</option>
+                            <option value="caminhao" data-i18n="caminhão">
+                                Caminhão
+                            </option>
+                            <option value="suv" data-i18n="SUV">SUV</option>
+                        </select>
+                        <input
+                            type="text"
+                            id="filterRelatorioModelo"
+                            placeholder="Filtrar por Modelo"
+                            data-i18n-placeholder="filtrarPorModelo"
+                        />
+                        <select id="filterRelatorioStatus">
+                            <option value="all" id="filterAllUsuarios">
+                                Todos Usuários
+                            </option>
+                            <option
+                                value="aprovado"
+                                id="filterAprovadosRelatorio"
+                            >
+                                Aprovados
+                            </option>
+                            <option
+                                value="recusado"
+                                id="filterRecusadosRelatorio"
+                            >
+                                Recusados
+                            </option>
+                            <option
+                                value="pendente"
+                                id="filterPendentesRelatorio"
+                            >
+                                Pendentes
+                            </option>
+                        </select>
+                        <button
+                            id="aplicarFiltroRelatoriosBtn"
+                            class="btn btn-primary"
+                        >
+                            Aplicar Filtro
+                        </button>
+                    </div>
+
+                    <h3 id="relatoriosTitle">📄 Relatórios e Estatísticas</h3>
+                    <div class="reports-charts">
+                        <div class="chart-container">
+                            <canvas id="graficoLocacoes"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="graficoAprovacoes"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="relatorio-export-buttons">
+                        <button id="exportCSVBtn" class="btn btn-primary">
+                            <i>📝</i>
+                            <span id="exportarCSVText">Exportar CSV</span>
+                        </button>
+                        <button id="exportPDFBtn" class="btn btn-danger">
+                            <i>📊</i>
+                            <span id="exportarPDFText">Exportar PDF</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Seção Configurações -->
+                <section
+                    id="configuracoes"
+                    class="admin-section"
+                    style="display: none"
+                >
+                    <h3 id="configuracoesTitle">⚙️ Configurações do Admin</h3>
+                    <div class="config-admin-data">
+                        <p>
+                            <strong id="adminLabel">Admin:</strong> Nome do
+                            Admin
+                        </p>
+                        <p>
+                            <strong id="emailLabel">Email:</strong>
+                            admin@example.com
+                        </p>
+                    </div>
+
+                    <div class="change-password">
+                        <button
+                            id="toggleChangePassword"
+                            class="btn btn-secondary"
+                        >
+                            Alterar Senha
+                        </button>
+                        <div
+                            id="changePasswordForm"
+                            style="display: none; margin-top: 1rem"
+                        >
+                            <input
+                                type="password"
+                                id="currentPassword"
+                                placeholder="Senha Atual"
+                                data-i18n-placeholder="senhaAtual"
+                            />
+                            <input
+                                type="password"
+                                id="newPassword"
+                                placeholder="Nova Senha"
+                                data-i18n-placeholder="novaSenha"
+                            />
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                placeholder="Confirmar Nova Senha"
+                                data-i18n-placeholder="confirmarSenha"
+                            />
+                            <button
+                                id="confirmChangeBtn"
+                                data-i18n="confirmarAlteracao"
+                                class="btn btn-primary"
+                            >
+                                Confirmar Alteração
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="access-logs">
+                        <div class="access-logs">
+                            <h4 id="acessosTitle">Registro de Acessos</h4>
+                            <div id="logsList">
+                                <p>
+                                    <span data-i18n="ultimoAcesso"
+                                        >Último Acesso:</span
+                                    >
+                                    <span id="lastAccess">Nenhum registro</span>
+                                </p>
+                                <p>
+                                    <span data-i18n="ultimaSaida"
+                                        >Última Saída:</span
+                                    >
+                                    <span id="lastExit">Nenhum registro</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modification-logs">
+                        <h4 id="modificacoesTitle">Registro de Modificações</h4>
+                        <div id="modLogsList">Nenhum registro encontrado.</div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Visualizador de Imagens -->
+        <div id="visualizadorImagens" class="visualizador-imagens">
+            <button class="btn-fechar" onclick="fecharVisualizador()">×</button>
+            <div class="navegacao-imagens">
+                <button class="btn-navegacao" onclick="mudarImagem(-1)">
+                    ←
+                </button>
+                <button class="btn-navegacao" onclick="mudarImagem(1)">
+                    →
+                </button>
+            </div>
+            <img
+                id="imagemVisualizador"
+                class="imagem-full"
+                src=""
+                alt="Visualização do veículo"
+            />
+        </div>
+
+        <!-- Loader -->
+        <div id="globalLoader" class="global-loader" style="display: none">
+            <div class="spinner-container">
+                <div class="custom-spinner"></div>
+                <p id="loadingText">Carregando...</p>
+            </div>
+        </div>
+
+        <!-- Notificação -->
+        <div id="notification" class="notification" style="display: none"></div>
+
+        <script src="js/auth-utils.js"></script>
+        <script src="js/admin.js"></script>
+    </body>
+</html>

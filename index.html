@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="LoCar - Conecte-se ao seu veículo!" />
+        <title>LoCar - Login Moderno</title>
+
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
+        <link href="css/index.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    </head>
+
+    <body>
+        <div class="background-container"></div>
+
+        <div class="language-switcher">
+            <div class="lang-btn" onclick="setLanguage('pt')">
+                <img src="https://flagcdn.com/w40/br.png" alt="Português" />
+            </div>
+            <div class="lang-btn" onclick="setLanguage('en')">
+                <img src="https://flagcdn.com/w40/us.png" alt="English" />
+            </div>
+            <div class="lang-btn" onclick="setLanguage('es')">
+                <img src="https://flagcdn.com/w40/es.png" alt="Español" />
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="left-panel">
+                <div class="left-content">
+                    <h1 id="welcomeText">
+                        Bem-vindo ao <span style="color: white">Lo</span
+                        ><span style="color: var(--accent-color)">Car</span>
+                    </h1>
+                    <p id="dynamicText">
+                        <strong>Localize</strong> <span id="textChange"></span
+                        ><span class="cursor"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <form id="formLogin" class="auth-form show-form">
+                    <div class="input-group">
+                        <label id="labelEmail" for="email" class="input-label"
+                            >E-mail</label
+                        >
+                        <input
+                            type="email"
+                            id="email"
+                            class="input-field"
+                            placeholder="Seu e-mail"
+                            required
+                        />
+                    </div>
+                    <div class="input-group">
+                        <label id="labelSenha" for="senha" class="input-label"
+                            >Senha</label
+                        >
+                        <div style="position: relative">
+                            <input
+                                type="password"
+                                id="senha"
+                                class="input-field"
+                                placeholder="Sua senha"
+                                required
+                            />
+                            <span
+                                class="password-toggle"
+                                onclick="togglePassword('senha')"
+                                >👁</span
+                            >
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary" id="btnEntrar">
+                        Entrar
+                    </button>
+                    <div class="social-buttons">
+                        <button type="button" class="btn-social">
+                            <img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
+                                alt="Google"
+                            />
+                        </button>
+                        <button type="button" class="btn-social">
+                            <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
+                                alt="Apple"
+                            />
+                        </button>
+                    </div>
+                    <p class="form-footer" id="footerText">
+                        Ainda não tem conta?
+                        <a
+                            href="#"
+                            class="form-link"
+                            onclick="mostrarCadastro()"
+                            >Cadastre-se</a
+                        >
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <script src="js/index.js"></script>
+    </body>
+</html>
